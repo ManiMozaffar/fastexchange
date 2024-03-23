@@ -12,6 +12,12 @@ Right now very few currencies and cryptos are supported, but you can help with t
 
 ## Getting started
 
+To Install FastExchange, simply do
+
+```
+pip install fastexchange
+```
+
 You can see the examples in examples/ folder, the library is type stated, which helps you alot with code interface.
 Make sure if you're using the library, your IDE's static type checker is on, otherwise you might get confused and take too much effort into debugging when you don't really need it.
 This is most advanced use case right now.
