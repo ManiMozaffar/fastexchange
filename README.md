@@ -2,49 +2,72 @@
 
 [![Release](https://img.shields.io/github/v/release/ManiMozaffar/fastexchange)](https://img.shields.io/github/v/release/ManiMozaffar/fastexchange)
 [![Build status](https://img.shields.io/github/actions/workflow/status/ManiMozaffar/fastexchange/main.yml?branch=main)](https://github.com/ManiMozaffar/fastexchange/actions/workflows/main.yml?query=branch%3Amain)
-[![codecov](https://codecov.io/gh/ManiMozaffar/fastexchange/branch/main/graph/badge.svg)](https://codecov.io/gh/ManiMozaffar/fastexchange)
 [![Commit activity](https://img.shields.io/github/commit-activity/m/ManiMozaffar/fastexchange)](https://img.shields.io/github/commit-activity/m/ManiMozaffar/fastexchange)
 [![License](https://img.shields.io/github/license/ManiMozaffar/fastexchange)](https://img.shields.io/github/license/ManiMozaffar/fastexchange)
 
-d crypto gateway interface ready to use
+A type stated library, to handle crypto and currency exchange
+Right now very few currencies and cryptos are supported, but you can help with that with contribution.
 
 - **Github repository**: <https://github.com/ManiMozaffar/fastexchange/>
-- **Documentation** <https://ManiMozaffar.github.io/fastexchange/>
 
-## Getting started with your project
+## Getting started
 
-First, create a repository on GitHub with the same name as this project, and then run the following commands:
+You can see the examples in examples/ folder, the library is type stated, which helps you alot with code interface.
+Make sure if you're using the library, your IDE's static type checker is on, otherwise you might get confused and take too much effort into debugging when you don't really need it.
+This is most advanced use case right now.
 
-```bash
-git init -b main
-git add .
-git commit -m "init commit"
-git remote add origin git@github.com:ManiMozaffar/fastexchange.git
-git push -u origin main
+```python
+import asyncio
+
+from rich import print
+
+from fastexchange.converter.clients import CurrencyMeUkClient
+from fastexchange.crypto.usdt import Trc20Gateway
+from fastexchange.currency import EURCurrency
+
+SOME_WALLET = ""
+
+
+async def fn():
+    trc_client = Trc20Gateway()
+    transactions = await trc_client.check_transaction(SOME_WALLET)
+    this_transaction = transactions.token_transfers[1]
+    print(this_transaction)  # show you the first transaction in API
+
+    usdt = this_transaction.to_token()
+    print(usdt)  # show you the USDT value with type
+
+    usd = this_transaction.to_usd()
+    print(usd)  # show you the USD value with type
+
+    exchange_client = CurrencyMeUkClient()
+    euro = await exchange_client.exchange(from_=usd, to=EURCurrency)
+    print(euro)  # Converted value to EUR with type
+
+
+if __name__ == "__main__":
+    asyncio.run(fn())
 ```
 
-Finally, install the environment and the pre-commit hooks with
+Crypto gateways, are gateway used to read from the blockchain.
+They might also offer support to determain value of a crypto currency. This is not yet implemented, but if you see the code, you'd see figure out how to implement it. DM me if you need help.
+Exchange clients are the clients used to
 
-```bash
-make install
+## Contribution
+
+Right now very few currencies and cryptos are supported, but you can help with that with contribution.
+Please make sure you're adherencing to the library principle, when contributing.
+The idea is that codes should be type stated, and you should avoid illegal state by using typing.
+[You can read more about this here](https://stianlagstad.no/2022/05/parse-dont-validate-python-edition/)
+
+## Runtime Errors
+
+Since library is type stated, that means if your IDE/static type checker doesn't complaint about your type, then it's gonna be ran fun.
+But there's only 1 edge case, which is when you're using converter client. You should explictly check if it's in mapping or not.
+
+```python
+exchange_client = CurrencyMeUkClient()
+   euro = await exchange_client.exchange(from_=usd, to=NotSupportedCurrency)
 ```
 
-You are now ready to start development on your project!
-The CI/CD pipeline will be triggered when you open a pull request, merge to main, or when you create a new release.
-
-To finalize the set-up for publishing to PyPi or Artifactory, see [here](https://fpgmaas.github.io/cookiecutter-poetry/features/publishing/#set-up-for-pypi).
-For activating the automatic documentation with MkDocs, see [here](https://fpgmaas.github.io/cookiecutter-poetry/features/mkdocs/#enabling-the-documentation-on-github).
-To enable the code coverage reports, see [here](https://fpgmaas.github.io/cookiecutter-poetry/features/codecov/).
-
-## Releasing a new version
-
-- Create an API Token on [Pypi](https://pypi.org/).
-- Add the API Token to your projects secrets with the name `PYPI_TOKEN` by visiting [this page](https://github.com/ManiMozaffar/fastexchange/settings/secrets/actions/new).
-- Create a [new release](https://github.com/ManiMozaffar/fastexchange/releases/new) on Github.
-- Create a new tag in the form `*.*.*`.
-
-For more details, see [here](https://fpgmaas.github.io/cookiecutter-poetry/features/cicd/#how-to-trigger-a-release).
-
----
-
-Repository initiated with [fpgmaas/cookiecutter-poetry](https://github.com/fpgmaas/cookiecutter-poetry).
+Since this is a mapping inside each implementation of client, and each client may not support few currencies, then you'd run into exception `ConverterNotMapped`. If you find a work-around, for this edge case, I'd happy to learn that from you :)
