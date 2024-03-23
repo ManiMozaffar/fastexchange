@@ -1,0 +1,1 @@
+::: fastexchange.foo

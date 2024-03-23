@@ -1,0 +1,123 @@
+[tool.poetry]
+name = "fastexchange"
+version = "0.0.1"
+description = "d crypto gateway interface ready to use"
+authors = ["Mani Mozaffar <fmani.mozaffar@gmail.com>"]
+repository = "https://github.com/ManiMozaffar/fastexchange"
+documentation = "https://ManiMozaffar.github.io/fastexchange/"
+readme = "README.md"
+packages = [{ include = "fastexchange" }]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0"
+pydantic = "^2.6.4"
+httpx = "^0.27.0"
+lxml = "^5.1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.2.0"
+mypy = "^1.5.1"
+pre-commit = "^3.4.0"
+tox = "^4.11.1"
+rich = "^13.7.1"
+
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.4.2"
+mkdocs-material = "^9.2.7"
+mkdocstrings = { extras = ["python"], version = "^0.23.0" }
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+
+[tool.ruff]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "I",
+  "N",
+  "Q",
+  "S",
+  "T",
+  "W",
+  "ANN",
+  "ARG",
+  "BLE",
+  "COM",
+  "DJ",
+  "DTZ",
+  "EM",
+  "ERA",
+  "EXE",
+  "FBT",
+  "ICN",
+  "INP",
+  "ISC",
+  "NPY",
+  "PD",
+  "PGH",
+  "PIE",
+  "PL",
+  "PT",
+  "PTH",
+  "PYI",
+  "RET",
+  "RSE",
+  "RUF",
+  "SIM",
+  "SLF",
+  "TCH",
+  "TID",
+  "TRY",
+  "UP",
+  "YTT",
+]
+unfixable = []
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
+]
+
+# Same as Black.
+line-length = 100
+
+[tool.ruff.format]
+preview = true
+
+
+[tool.ruff.per-file-ignores]
+"tests/*" = ["S101"]
