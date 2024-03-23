@@ -1,3 +1,4 @@
+# type: ignore
 import asyncio
 from decimal import Decimal
 

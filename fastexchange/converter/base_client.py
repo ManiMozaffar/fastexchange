@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Union
 
 from typing_extensions import TypeVar
 
@@ -13,7 +14,7 @@ ToCurrency = TypeVar("ToCurrency", bound=DiscriminatedCurrency)
 class BaseConverter(ABC):
     mapping: dict[FromToExchange, str]
 
-    def __init__(self, client: BaseClient | None = None):
+    def __init__(self, client: Union[BaseClient, None] = None):
         self.client = client or get_client()
 
     def is_supported(self, from_: type[DiscriminatedCurrency], to: type[ToCurrency]) -> bool:

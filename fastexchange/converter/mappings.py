@@ -1,7 +1,6 @@
 from typing import NamedTuple
 
-from ..currency import EURCurrency, USDCurrency
-from .base_client import DiscriminatedCurrency
+from ..currency import DiscriminatedCurrency, EURCurrency, USDCurrency
 
 
 class FromToExchange(NamedTuple):

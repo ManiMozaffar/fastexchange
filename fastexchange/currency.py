@@ -1,9 +1,10 @@
 from abc import ABC
 from decimal import Decimal
 from enum import auto
-from typing import Annotated, Generic, Literal, TypeAlias, TypeVar, Union
+from typing import Annotated, Generic, Literal, TypeVar, Union
 
 from pydantic import BaseModel, Field, TypeAdapter
+from typing_extensions import TypeAlias
 
 from fastexchange.utils import StrEnum
 

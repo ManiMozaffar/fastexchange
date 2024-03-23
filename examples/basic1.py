@@ -1,3 +1,4 @@
+# type: ignore
 from decimal import Decimal
 
 from fastexchange.currency import EURCurrency, USDCurrency

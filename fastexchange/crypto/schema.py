@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 from decimal import Decimal
-from typing import Annotated
+from typing import Annotated, Union
 
 from pydantic import BaseModel, BeforeValidator, Field
 
@@ -62,10 +62,10 @@ class TokenTransfer(BaseModel):
     riskTransaction: bool
 
     # allow to parse others
-    event_type: EventTypes | str = Field(union_mode="left_to_right")
-    contract_type: Network | str = Field(union_mode="left_to_right")
-    finalResult: Status | str = Field(union_mode="left_to_right")
-    contractRet: Status | str = Field(union_mode="left_to_right")
+    event_type: Union[EventTypes, str] = Field(union_mode="left_to_right")
+    contract_type: Union[Network, str] = Field(union_mode="left_to_right")
+    finalResult: Union[Status, str] = Field(union_mode="left_to_right")
+    contractRet: Union[Status, str] = Field(union_mode="left_to_right")
 
     def to_usd(self, current_rate: Decimal = Decimal(1)) -> USDCurrency:
         """We assume that 1 usdt == 1 usd, but in case this wasn't true, this method should get the current rate"""

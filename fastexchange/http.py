@@ -2,7 +2,6 @@ import typing
 from contextlib import contextmanager
 from functools import lru_cache
 from http.cookiejar import CookieJar
-from typing import Self
 
 from httpx import AsyncClient
 from httpx._client import USE_CLIENT_DEFAULT, UseClientDefault
@@ -20,16 +19,17 @@ from httpx._types import (
     TimeoutTypes,
     URLTypes,
 )
+from typing_extensions import Self
 
 
 class NullCookieJar(CookieJar):
     """A CookieJar that does not support setting cookie"""
 
-    def extract_cookies(self, *_):
+    def extract_cookies(self, *args, **kwargs):
         """For extracting and saving cookies.  This implementation does nothing"""
         pass
 
-    def set_cookie(self, _):
+    def set_cookie(self, *args, **kwargs):
         """Normally for setting a cookie.  This implementation does nothing"""
         pass
 
